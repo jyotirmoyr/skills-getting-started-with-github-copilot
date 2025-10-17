@@ -54,7 +54,8 @@ Let's start up our development environment, use copilot to learn a bit about the
 
 1. At the top of VS Code, locate and click the **Toggle Chat icon** to open a Copilot Chat side panel.
 
-   <img width="150" alt="image" src="https://github.com/user-attachments/assets/abf584e9-ef68-4725-8b22-4803805e6d55" />
+   <img width="150" alt="image" src="https://github.com/user-attachments/assets/abf584e9
+   -ef68-4725-8b22-4803805e6d55" />
 
    > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
 
