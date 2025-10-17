@@ -1,4 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Delegate click event for delete icons
+  activitiesList.addEventListener("click", async (event) => {
+    const target = event.target;
+    if (target.classList.contains("delete-icon")) {
+      const activity = target.getAttribute("data-activity");
+      const email = target.getAttribute("data-email");
+      if (activity && email) {
+        try {
+          const response = await fetch(`/activities/${encodeURIComponent(activity)}/unregister?email=${encodeURIComponent(email)}`, {
+            method: "POST"
+          });
+          const result = await response.json();
+          if (response.ok) {
+            messageDiv.textContent = result.message || "Participant unregistered.";
+            messageDiv.className = "message success";
+            await fetchActivities();
+          } else {
+            messageDiv.textContent = result.detail || "Failed to unregister participant.";
+            messageDiv.className = "message error";
+          }
+        } catch (error) {
+          messageDiv.textContent = "Error unregistering participant.";
+          messageDiv.className = "message error";
+        }
+        messageDiv.classList.remove("hidden");
+        setTimeout(() => {
+          messageDiv.classList.add("hidden");
+        }, 4000);
+      }
+    }
+  });
   const activitiesList = document.getElementById("activities-list");
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
@@ -38,12 +69,15 @@ document.addEventListener("DOMContentLoaded", () => {
         // Build participants HTML
         let participantsHTML = `<div class="participants"><strong>Participants</strong>`;
         if (details.participants && details.participants.length > 0) {
-          participantsHTML += "<ul>";
+          participantsHTML += '<div class="participants-list">';
           details.participants.forEach((email) => {
             const displayName = formatParticipantName(email);
-            participantsHTML += `<li class="participant-item" title="${email}">${displayName}</li>`;
+            participantsHTML += `<div class="participant-item" title="${email}">
+              <span class="participant-name">${displayName}</span>
+              <span class="delete-icon" title="Unregister" data-activity="${name}" data-email="${email}" style="cursor:pointer;margin-left:8px;" aria-label="Delete participant">🗑️</span>
+            </div>`;
           });
-          participantsHTML += "</ul>";
+          participantsHTML += '</div>';
         } else {
           participantsHTML += `<p class="no-participants">No participants yet — be the first!</p>`;
         }

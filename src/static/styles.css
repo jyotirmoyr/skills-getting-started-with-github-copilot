@@ -90,19 +90,32 @@ section h3 {
 }
 
 .participants ul {
-  list-style: disc inside;
+  list-style: none;
   margin-left: 0;
-  padding-left: 14px;
+  padding-left: 0;
 }
 
 .participant-item {
   font-size: 14px;
   color: #444;
   padding: 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .participant-item::marker {
-  color: #1a237e;
+  /* Removed marker styling */
+/* Style for delete icon */
+.delete-icon {
+  color: #d32f2f;
+  font-size: 16px;
+  margin-left: 8px;
+  transition: color 0.2s;
+}
+.delete-icon:hover {
+  color: #b71c1c;
+}
 }
 
 .no-participants {
